@@ -31,7 +31,7 @@ import org.hamcrest.core.IsNot;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.IsTrue;
 
-class EquilibriumTest {
+final class EquilibriumTest {
 
     @Test
     void fromString() {
