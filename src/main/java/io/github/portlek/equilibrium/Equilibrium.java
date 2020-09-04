@@ -26,6 +26,7 @@
 package io.github.portlek.equilibrium;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -158,7 +159,6 @@ public enum Equilibrium {
     NOTHING((leftObject, rightObject) -> false);
 
     @NotNull
-    @Getter
     private final List<String> operators;
 
     @NotNull
@@ -178,6 +178,11 @@ public enum Equilibrium {
 
     public boolean control(@NotNull final Object leftObject, @NotNull final Object rightObject) {
         return this.func.apply(leftObject, rightObject);
+    }
+
+    @NotNull
+    public List<String> getOperators() {
+        return Collections.unmodifiableList(this.operators);
     }
 
 }
