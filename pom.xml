@@ -35,7 +35,7 @@
   <artifactId>equilibrium</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>equilibrium</name>
-  <description>A library which provides math processes..</description>
+  <description>A library which provides math processes.</description>
   <url>https://github.com/portlek/equilibrium</url>
   <scm>
     <url>https://github.com/portlek/equilibrium</url>
