@@ -23,6 +23,6 @@
  *
  */
 /**
- * the package that contains main tests.
+ * the package that contains main classes.
  */
 package io.github.portlek.equilibrium;
