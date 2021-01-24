@@ -152,4 +152,9 @@ public enum Equilibrium {
   public List<String> getOperators() {
     return Collections.unmodifiableList(this.operators);
   }
+
+  @Override
+  public String toString() {
+    return this.toString;
+  }
 }
