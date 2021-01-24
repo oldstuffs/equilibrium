@@ -25,12 +25,13 @@
 
 package io.github.portlek.equilibrium;
 
+import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * a class that contains utility methods.
  */
-final class Utilities {
+public final class Utilities {
 
   /**
    * ctor.
@@ -46,7 +47,7 @@ final class Utilities {
    *
    * @return {@code true} if the left object is instance of {@code rightObject}.
    */
-  static boolean instanceOf(@NotNull final Object leftObject, @NotNull final Object rightObject) {
+  public static boolean instanceOf(@NotNull final Object leftObject, @NotNull final Object rightObject) {
     if (!(leftObject instanceof Class<?>) || !(rightObject instanceof Class<?>)) {
       return false;
     }
@@ -61,7 +62,7 @@ final class Utilities {
    *
    * @return {@code true} if the left object is not instance of {@code rightObject}.
    */
-  static boolean noInstanceOf(@NotNull final Object leftObject, @NotNull final Object rightObject) {
+  public static boolean noInstanceOf(@NotNull final Object leftObject, @NotNull final Object rightObject) {
     return !Utilities.instanceOf(leftObject, rightObject);
   }
 
@@ -73,7 +74,7 @@ final class Utilities {
    *
    * @return {@code true} if the left object is bigger than the right object.
    */
-  static boolean isBigger(@NotNull final Object leftObject, @NotNull final Object rightObject) {
+  public static boolean isBigger(@NotNull final Object leftObject, @NotNull final Object rightObject) {
     if (!(leftObject instanceof Number) || !(rightObject instanceof Number)) {
       return false;
     }
@@ -108,7 +109,7 @@ final class Utilities {
    *
    * @return {@code true} if the left object is bigger equals than the right object.
    */
-  static boolean isBiggerEquals(@NotNull final Object leftObject, @NotNull final Object rightObject) {
+  public static boolean isBiggerEquals(@NotNull final Object leftObject, @NotNull final Object rightObject) {
     if (!(leftObject instanceof Number) || !(rightObject instanceof Number)) {
       return false;
     }
@@ -143,7 +144,7 @@ final class Utilities {
    *
    * @return {@code true} if the left object is less than the right object.
    */
-  static boolean isLess(@NotNull final Object leftObject, @NotNull final Object rightObject) {
+  public static boolean isLess(@NotNull final Object leftObject, @NotNull final Object rightObject) {
     return !Utilities.isBiggerEquals(leftObject, rightObject);
   }
 
@@ -155,7 +156,31 @@ final class Utilities {
    *
    * @return {@code true} if the left object is less equals than the right object.
    */
-  static boolean isLessEquals(@NotNull final Object leftObject, @NotNull final Object rightObject) {
+  public static boolean isLessEquals(@NotNull final Object leftObject, @NotNull final Object rightObject) {
     return !Utilities.isBigger(leftObject, rightObject);
+  }
+
+  /**
+   * checks if the given {@code leftObject} equals {@code rightObject}.
+   *
+   * @param leftObject the left object to check.
+   * @param rightObject the right object to check.
+   *
+   * @return {@code true} if the left object equals {@code rightObject}.
+   */
+  public static boolean equals(@NotNull final Object leftObject, @NotNull final Object rightObject) {
+    return Objects.equals(leftObject, rightObject);
+  }
+
+  /**
+   * checks if the given {@code leftObject} not equals {@code rightObject}.
+   *
+   * @param leftObject the left object to check.
+   * @param rightObject the right object to check.
+   *
+   * @return {@code true} if the left object not equals right object.
+   */
+  public static boolean notEqual(@NotNull final Object leftObject, @NotNull final Object rightObject) {
+    return !Utilities.equals(leftObject, rightObject);
   }
 }

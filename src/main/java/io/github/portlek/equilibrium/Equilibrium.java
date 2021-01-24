@@ -28,7 +28,6 @@ package io.github.portlek.equilibrium;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.BiPredicate;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,12 +39,11 @@ public enum Equilibrium {
   /**
    * checks if the object equals.
    */
-  EQUALS(Objects::equals, "Objects.equals(%s, %s)", "=", "=="),
+  EQUALS(Utilities::equals, "Utilities.equals(%s, %s)", "=", "=="),
   /**
    * checks if the object not equals.
    */
-  NOT_EQUALS((leftObject, rightObject) ->
-    !leftObject.equals(rightObject), "!%s.equals(%s)", "!="),
+  NOT_EQUALS(Utilities::notEqual, "Utilities.notEqual(%s, %s)", "!="),
   /**
    * checks if the number is bigger than the other.
    */
