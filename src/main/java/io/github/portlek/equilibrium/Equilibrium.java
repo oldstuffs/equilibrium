@@ -40,150 +40,41 @@ public enum Equilibrium {
   /**
    * checks if the object equals.
    */
-  EQUALS(Objects::equals, "=", "=="),
+  EQUALS(Objects::equals, "Objects.equals(%s, %s)", "=", "=="),
   /**
    * checks if the object not equals.
    */
   NOT_EQUALS((leftObject, rightObject) ->
-    !leftObject.equals(rightObject), "!="),
+    !leftObject.equals(rightObject), "!%s.equals(%s)", "!="),
   /**
    * checks if the number is bigger than the other.
    */
-  BIGGER((leftObject, rightObject) -> {
-    if (!(leftObject instanceof Number) || !(rightObject instanceof Number)) {
-      return false;
-    }
-    final Number left = (Number) leftObject;
-    final Number right = (Number) rightObject;
-    if (left instanceof Double) {
-      return left.doubleValue() > right.doubleValue();
-    }
-    if (left instanceof Integer) {
-      return left.intValue() > right.intValue();
-    }
-    if (left instanceof Long) {
-      return left.longValue() > right.longValue();
-    }
-    if (left instanceof Float) {
-      return left.floatValue() > right.floatValue();
-    }
-    if (left instanceof Short) {
-      return (int) left.shortValue() > (int) right.shortValue();
-    }
-    if (left instanceof Byte) {
-      return (int) left.byteValue() > (int) right.byteValue();
-    }
-    return false;
-  }, ">"),
+  BIGGER(Utilities::isBigger, "Utilities.isBigger(%s, %s)", ">"),
   /**
    * checks if the number is equal or bigger than the other.
    */
-  BIGGER_AND_EQUALS((leftObject, rightObject) -> {
-    if (!(leftObject instanceof Number) || !(rightObject instanceof Number)) {
-      return false;
-    }
-    final Number left = (Number) leftObject;
-    final Number right = (Number) rightObject;
-    if (left instanceof Double) {
-      return left.doubleValue() >= right.doubleValue();
-    }
-    if (left instanceof Integer) {
-      return left.intValue() >= right.intValue();
-    }
-    if (left instanceof Long) {
-      return left.longValue() >= right.longValue();
-    }
-    if (left instanceof Float) {
-      return left.floatValue() >= right.floatValue();
-    }
-    if (left instanceof Short) {
-      return (int) left.shortValue() >= (int) right.shortValue();
-    }
-    if (left instanceof Byte) {
-      return (int) left.byteValue() >= (int) right.byteValue();
-    }
-    return false;
-  }, "=>", ">="),
+  BIGGER_AND_EQUALS(Utilities::isBiggerEquals, "Utilities.isBiggerEquals(%s, %s)", "=>", ">="),
   /**
    * checks if the number is lower than the other.
    */
-  LESS((leftObject, rightObject) -> {
-    if (!(leftObject instanceof Number) || !(rightObject instanceof Number)) {
-      return false;
-    }
-    final Number left = (Number) leftObject;
-    final Number right = (Number) rightObject;
-    if (left instanceof Double) {
-      return left.doubleValue() < right.doubleValue();
-    }
-    if (left instanceof Integer) {
-      return left.intValue() < right.intValue();
-    }
-    if (left instanceof Long) {
-      return left.longValue() < right.longValue();
-    }
-    if (left instanceof Float) {
-      return left.floatValue() < right.floatValue();
-    }
-    if (left instanceof Short) {
-      return (int) left.shortValue() < (int) right.shortValue();
-    }
-    if (left instanceof Byte) {
-      return (int) left.byteValue() < (int) right.byteValue();
-    }
-    return false;
-  }, "<"),
+  LESS(Utilities::isLess, "Utilities.isLess(%s, %s)", "<"),
   /**
    * checks if the number is equal or lower than the other.
    */
-  LESS_OR_EQUALS((leftObject, rightObject) -> {
-    if (!(leftObject instanceof Number) || !(rightObject instanceof Number)) {
-      return false;
-    }
-    final Number left = (Number) leftObject;
-    final Number right = (Number) rightObject;
-    if (left instanceof Double) {
-      return left.doubleValue() <= right.doubleValue();
-    }
-    if (left instanceof Integer) {
-      return left.intValue() <= right.intValue();
-    }
-    if (left instanceof Long) {
-      return left.longValue() <= right.longValue();
-    }
-    if (left instanceof Float) {
-      return left.floatValue() <= right.floatValue();
-    }
-    if (left instanceof Short) {
-      return (int) left.shortValue() <= (int) right.shortValue();
-    }
-    if (left instanceof Byte) {
-      return (int) left.byteValue() <= (int) right.byteValue();
-    }
-    return false;
-  }, "<=", "=<"),
+  LESS_OR_EQUALS(Utilities::isLessEquals, "Utilities.isLessEquals(%s, %s)", "<=", "=<"),
   /**
    * checks if the object instance of the other.
    */
-  INSTANCE_OF((leftObject, rightObject) -> {
-    if (!(leftObject instanceof Class<?>) || !(rightObject instanceof Class<?>)) {
-      return false;
-    }
-    return ((Class<?>) rightObject).isAssignableFrom((Class<?>) leftObject);
-  }, "is", "instance of"),
+  INSTANCE_OF(Utilities::instanceOf, "Utilities.instanceOf(%s, %s)", "is", "instance of"),
   /**
    * checks if the object not instance of the other.
    */
-  NOT_INSTANCE_OF((leftObject, rightObject) -> {
-    if (!(leftObject instanceof Class<?>) || !(rightObject instanceof Class<?>)) {
-      return false;
-    }
-    return !((Class<?>) rightObject).isAssignableFrom((Class<?>) leftObject);
-  }, "isnt", "isn't", "isnot", "is not", "not instance of"),
+  NOT_INSTANCE_OF(Utilities::noInstanceOf, "Utilities.noInstanceOf(%s, %s)",
+    "isnt", "isn't", "isnot", "is not", "not instance of"),
   /**
    * nothing.
    */
-  NOTHING((leftObject, rightObject) -> false);
+  NOTHING((leftObject, rightObject) -> false, "");
 
   /**
    * the operators.
@@ -198,14 +89,22 @@ public enum Equilibrium {
   private final BiPredicate<Object, Object> predicate;
 
   /**
+   * the to string.
+   */
+  @NotNull
+  private final String toString;
+
+  /**
    * ctor.
    *
    * @param operators the operators.
    * @param predicate the function.
    */
-  Equilibrium(@NotNull final List<String> operators, @NotNull final BiPredicate<Object, Object> predicate) {
+  Equilibrium(@NotNull final List<String> operators, @NotNull final BiPredicate<Object, Object> predicate,
+              @NotNull final String toString) {
     this.operators = operators;
     this.predicate = predicate;
+    this.toString = toString;
   }
 
   /**
@@ -214,8 +113,9 @@ public enum Equilibrium {
    * @param predicate the function.
    * @param operators the operators.
    */
-  Equilibrium(@NotNull final BiPredicate<Object, Object> predicate, @NotNull final String... operators) {
-    this(Arrays.asList(operators), predicate);
+  Equilibrium(@NotNull final BiPredicate<Object, Object> predicate, @NotNull final String toString,
+              @NotNull final String... operators) {
+    this(Arrays.asList(operators), predicate, toString);
   }
 
   /**
