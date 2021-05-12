@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020 Hasan Demirtaş
+ * Copyright (c) 2021 Hasan Demirtaş
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,14 +26,17 @@
 package io.github.portlek.equilibrium;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.BiPredicate;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * a class that allows you to use Java operators.
  */
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public enum Equilibrium {
 
   /**
@@ -78,6 +81,7 @@ public enum Equilibrium {
    * the operators.
    */
   @NotNull
+  @Getter
   private final List<String> operators;
 
   /**
@@ -95,20 +99,8 @@ public enum Equilibrium {
   /**
    * ctor.
    *
-   * @param operators the operators.
    * @param predicate the function.
-   */
-  Equilibrium(@NotNull final List<String> operators, @NotNull final BiPredicate<Object, Object> predicate,
-              @NotNull final String toString) {
-    this.operators = operators;
-    this.predicate = predicate;
-    this.toString = toString;
-  }
-
-  /**
-   * ctor.
-   *
-   * @param predicate the function.
+   * @param toString the to string.
    * @param operators the operators.
    */
   Equilibrium(@NotNull final BiPredicate<Object, Object> predicate, @NotNull final String toString,
@@ -143,16 +135,7 @@ public enum Equilibrium {
     return this.predicate.test(leftObject, rightObject);
   }
 
-  /**
-   * obtains the operators.
-   *
-   * @return the operator list.
-   */
   @NotNull
-  public List<String> getOperators() {
-    return Collections.unmodifiableList(this.operators);
-  }
-
   @Override
   public String toString() {
     return this.toString;
